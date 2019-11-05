@@ -94,9 +94,9 @@ server.get(`/api/posts/:id/comments`, (req, res) => {
 server.delete(`/api/posts/:id`, (req, res) => {
     const id = req.params.id;
     db.remove(id)
-        .then(info => {
-            if(info){
-                res.status(205).json({ success: true, info })
+        .then(deletedId => {
+            if(deletedId){
+                res.status(205).json({ success: true, deletedId })
             } else {
                 res.status(404).json({ success: false, message: "The post with the specified ID does not exist." })
             }
