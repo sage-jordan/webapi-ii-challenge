@@ -36,14 +36,25 @@ server.post(`/api/posts/:id/comments`, (req, res) => {
                     ...comment,
                     ...postId
                 }
-                res.status(200).json({ success: true, newFullComment })
+                res.status(201).json({ success: true, newFullComment })
             })
             .catch(err => {
-                res.status(500).json({ success: false, err})
+                res.status(501).json({ success: false, err})
             })
     } else {
         res.status(404).json({ success: false, message: `Please provide text and post_id for the comment.`})
     };
+});
+
+//GET POSTS
+server.get(`/api/posts`, (req, res) => {
+    db.find()
+        .then(posts => {
+            res.status(202).json({ success: true, posts })
+        })
+        .catch(err => {
+            res.status(502).json({ success: false, err })
+        });
 });
 
 server.listen(port, () => {
