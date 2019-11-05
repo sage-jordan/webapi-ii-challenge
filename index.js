@@ -62,7 +62,7 @@ server.get(`/api/posts/:id`, (req, res) => {
     const id = req.params.id;
     db.findById(id)
         .then(post => {
-            if(post.id){
+            if(post){
                 res.status(203).json({ succcess: true, post })
             } else {
                 res.status(404).json({ success: false, message: "The post with the specified ID does not exist." })
@@ -80,13 +80,29 @@ server.get(`/api/posts/:id/comments`, (req, res) => {
         .then(comments => {
             console.log(comments);
             if(id){
-                res.status(204).json({ success: true, comments });
+                res.status(204).json({ success: true, comments }); // RETURNS 204 W/ 'NO CONTENT'
             } else {
                 res.status(404).json({ success: false, message: "The post with the specified ID does not exist."});
             }
         })
         .catch(err => {
             res.status(504).json({ success: false });
+        })
+});
+
+//DELETE A POST
+server.delete(`/api/posts/:id`, (req, res) => {
+    const id = req.params.id;
+    db.remove(id)
+        .then(info => {
+            if(info){
+                res.status(205).json({ success: true, info })
+            } else {
+                res.status(404).json({ success: false, message: "The post with the specified ID does not exist." })
+            }
+        })
+        .catch(err => {
+            res.status(505).json({ successful: false, err })
         })
 })
 
