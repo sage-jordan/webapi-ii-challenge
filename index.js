@@ -25,6 +25,27 @@ server.post('/api/posts', (req, res) => {
     };
 });
 
+//POST A COMMENT ( no need to pass params, only body w post_id)
+server.post(`/api/posts/:id/comments`, (req, res) => {
+    const id = req.body.post_id;
+    const comment = req.body;
+    if(comment["text"] && id){
+        db.insertComment(comment)
+            .then(postId => {
+                const newFullComment = {
+                    ...comment,
+                    ...postId
+                }
+                res.status(200).json({ success: true, newFullComment })
+            })
+            .catch(err => {
+                res.status(500).json({ success: false, err})
+            })
+    } else {
+        res.status(404).json({ success: false, message: `Please provide text and post_id for the comment.`})
+    };
+});
+
 server.listen(port, () => {
     console.log(`=== Server listening on port ${port} ===`);
 })
