@@ -56,6 +56,16 @@ server.get(`/api/posts`, (req, res) => {
             res.status(502).json({ success: false, err })
         });
 });
+server.get(`/api/posts/:id`, (req, res) => {
+    const id = req.params.id;
+    db.findById(id)
+        .then(post => {
+            res.status(203).json({ succcess: true, post })
+        })
+        .catch(err => {
+            res.status(503).json({ success: false, err })
+        })
+})
 
 server.listen(port, () => {
     console.log(`=== Server listening on port ${port} ===`);
