@@ -60,7 +60,11 @@ server.get(`/api/posts/:id`, (req, res) => {
     const id = req.params.id;
     db.findById(id)
         .then(post => {
-            res.status(203).json({ succcess: true, post })
+            if(post.id){
+                res.status(203).json({ succcess: true, post })
+            } else {
+                res.status(404).json({ success: false, message: "The post with the specified ID does not exist." })
+            }
         })
         .catch(err => {
             res.status(503).json({ success: false, err })
