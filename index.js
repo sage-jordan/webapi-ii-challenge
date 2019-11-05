@@ -56,6 +56,8 @@ server.get(`/api/posts`, (req, res) => {
             res.status(502).json({ success: false, err })
         });
 });
+
+//GET POST BY ID
 server.get(`/api/posts/:id`, (req, res) => {
     const id = req.params.id;
     db.findById(id)
@@ -68,6 +70,23 @@ server.get(`/api/posts/:id`, (req, res) => {
         })
         .catch(err => {
             res.status(503).json({ success: false, err })
+        })
+})
+
+// GET COMMENTS BY POST ID
+server.get(`/api/posts/:id/comments`, (req, res) => {
+    const id = req.params.id;
+    db.findPostComments(id)
+        .then(comments => {
+            console.log(comments);
+            if(id){
+                res.status(204).json({ success: true, comments });
+            } else {
+                res.status(404).json({ success: false, message: "The post with the specified ID does not exist."});
+            }
+        })
+        .catch(err => {
+            res.status(504).json({ success: false });
         })
 })
 
