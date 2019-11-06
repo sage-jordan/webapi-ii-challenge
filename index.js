@@ -80,7 +80,7 @@ server.get(`/api/posts/:id/comments`, (req, res) => {
         .then(comments => {
             console.log(comments);
             if(id){
-                res.status(204).json({ success: true, comments }); // RETURNS 204 W/ 'NO CONTENT'
+                res.status(200).json({ success: true, comments }); // RETURNS 204 W/ 'NO CONTENT'
             } else {
                 res.status(404).json({ success: false, message: "The post with the specified ID does not exist."});
             }
