@@ -131,6 +131,6 @@ server.put(`/api/posts/:id`, (req, res) => {
     }
 })
 
-server.listen(port, () => {
-    console.log(`=== Server listening on port ${port} ===`);
-})
+    server.listen(port, () => {
+        console.log(`=== Server listening on port ${port} ===`);
+    })
